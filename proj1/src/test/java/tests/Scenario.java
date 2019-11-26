@@ -118,24 +118,24 @@ public class Scenario {
 		//click on select under Online container
 		driver.findElement(By.xpath("//div[@class='quickOptionContainer']/div[1]/label[1]/span[2]/span[1]")).click();
 
-		//validate the username and password fields in the login page
+		//validate the username field in the login page
 		String expected_fieldlabelname1="username";
 		String actual_fieldlabelname1=driver.findElement(By.xpath("//span[contains(text(),'Client number')]")).getText();
 		softAssert2.assertTrue(actual_fieldlabelname1.equalsIgnoreCase(expected_fieldlabelname1), "Username field label check");
 
+		//validate the Password field in the login page
 		String expected_fieldlabelname2="Password";
 		String actual_fieldlabelname2=driver.findElement(By.xpath("//span[contains(text(),'Password')]")).getText();
 		System.out.println(actual_fieldlabelname2);
-		softAssert2.assertTrue(actual_fieldlabelname2.equalsIgnoreCase(expected_fieldlabelname2), "passowrd field label check");
+		softAssert2.assertTrue(actual_fieldlabelname2.equalsIgnoreCase(expected_fieldlabelname2), "password field label check");
 
 		softAssert2.assertAll();
 
 	}
 
-	//@AfterTest
+	@AfterTest
 	public void driver_quit(){
 
 		driver.quit();
 	}
-
 }
