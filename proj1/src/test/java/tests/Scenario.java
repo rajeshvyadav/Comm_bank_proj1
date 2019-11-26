@@ -26,7 +26,7 @@ public class Scenario {
 	@BeforeTest
 	public void LaunchBrowser(){
 
-		//Launch Chrome Browser
+		//Launch the Chrome Browser
 		System.setProperty("webdriver.chrome.driver", ".\\chromedriver.exe");
 		driver=new ChromeDriver();
 		driver.manage().window().maximize();
