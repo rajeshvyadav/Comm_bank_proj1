@@ -130,7 +130,6 @@ public class Scenario {
 		softAssert2.assertTrue(actual_fieldlabelname2.equalsIgnoreCase(expected_fieldlabelname2), "password field label check");
 
 		softAssert2.assertAll();
-
 	}
 
 	@AfterTest
