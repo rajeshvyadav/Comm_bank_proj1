@@ -38,99 +38,28 @@ public class Scenario {
 	}
 
 	@Test (priority=1)
-	public void validate_SubTopics(){
+	public void validate_Title(){
 
 		SoftAssert softAssert1=new SoftAssert();
 		
-		//Navigate to "Travelling Overseas?" section and click on "Top 10 travel tips"
-		driver.findElement(By.xpath("//p[contains(text(),'Top 10 travel tips')]")).click();
-
-		//Click on "Travel Money Card" from "RELATED LINKS AND PRODUCTS"
-		driver.findElement(By.xpath("//aside[@class='related-articles hide-mobile']//a[contains(text(),'Travel Money Card')]")).click();
-
-		//Navigating to Travel Money Card window
-		Set<String> windowHandles=driver.getWindowHandles();
-		Iterator<String> it1=windowHandles.iterator();
-		String ParentWindow=it1.next();
-		String TravelWindow=it1.next();
-		driver.switchTo().window(TravelWindow);
-
-		Set<String> subTopics_names=new HashSet();
-		List<WebElement> subtopics=driver.findElements(By.xpath("//div[@class='anchor-module']/nav/ul/li"));
-		for(int i=1;i<=subtopics.size();i++){
-
-			String topicName=driver.findElement(By.xpath("//div[@class='anchor-module']/nav/ul/li["+i+"]/a")).getText();
-			subTopics_names.add(topicName);	
-		}
-
-		Iterator<String> it=subTopics_names.iterator();
-		System.out.println("****Display all the subtopics****");
-		while(it.hasNext()){
-
-			//Display all the subtopics
-			System.out.println(it.next());		
-		}
-
-		//Verify whether "Follow the exchange rate" subTopic exists
-		String st1="Follow the exchange rate";
-		Boolean flag_subtopicchk=false;
-
-		if(subTopics_names.contains(st1)){
-
-			flag_subtopicchk=true;
-		}
-		softAssert1.assertTrue(flag_subtopicchk, "SubTopic "+st1+" exists");
-
-		String st2="check fees";
-		flag_subtopicchk=false;
-		if(subTopics_names.contains(st2)){
-
-			flag_subtopicchk=true;
-		}
-		softAssert1.assertTrue(flag_subtopicchk, "SubTopic "+st2+" exists");
+		System.out.println(driver.getTitle());
+		
+		String title=driver.getTitle();
+		softAssert1.assertTrue(title.contains("CommBank"), "Title check");
 
 		softAssert1.assertAll();	
 	}
 
 	@Test(priority=2)
-	public void loginpage_chk(){
+	public void Validate_LoginButtonAvailability() throws InterruptedException{
 
 		SoftAssert softAssert2=new SoftAssert();
-		
-		//Scroll down and click on "Log on to Net Bank"
-		WebElement Netbank_link=driver.findElement(By.xpath("//div[@class='item-section']//div[1]//div[1]//ol[1]//li[1]//a[1]"));
+		Thread.sleep(3000);
+		//driver.wait(3000);
+		Boolean bln_itemsection=driver.findElement(By.xpath("//a[@class='commbank-header-login']")).isDisplayed();
+		softAssert2.assertTrue(bln_itemsection.equals(true), "Login button check");
 
-		Actions act=new Actions(driver);
-		act.moveToElement(Netbank_link).build().perform();
-		Netbank_link.click();	
-
-		Set<String> windowHandles1=driver.getWindowHandles();
-
-		Iterator<String> it2=windowHandles1.iterator();
-		String ParentWindow1=it2.next();
-		String TravelWindow1=it2.next();
-		String ApplyWindow=it2.next();
-
-		driver.switchTo().window(ApplyWindow);
-
-		System.out.println(driver.getTitle());
-
-		//click on select under Online container
-		driver.findElement(By.xpath("//div[@class='quickOptionContainer']/div[1]/label[1]/span[2]/span[1]")).click();
-
-		//validate the username field in the login page
-		String expected_fieldlabelname1="username";
-		String actual_fieldlabelname1=driver.findElement(By.xpath("//span[contains(text(),'Client number')]")).getText();
-		softAssert2.assertTrue(actual_fieldlabelname1.equalsIgnoreCase(expected_fieldlabelname1), "Username field label check");
-
-		//validate the Password field in the login page
-		String expected_fieldlabelname2="Password";
-		String actual_fieldlabelname2=driver.findElement(By.xpath("//span[contains(text(),'Password')]")).getText();
-		System.out.println(actual_fieldlabelname2);
-		softAssert2.assertTrue(actual_fieldlabelname2.equalsIgnoreCase(expected_fieldlabelname2), "password field label check");
-
-		softAssert2.assertAll();
-		
+		softAssert2.assertAll();	
 	}
 
 	@AfterTest
